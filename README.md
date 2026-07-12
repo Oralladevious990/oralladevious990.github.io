@@ -12,13 +12,13 @@ GitHub Pages 部署后访问：
 - **深色科技风设计**：近黑底色 `#0A0E1A` + 渐变玻璃拟态卡片 + 三色分类体系（青·大模型 / 紫·芯片 / 绿·新产品）
 - **完整交互**：分类筛选、实时搜索（标题/摘要/标签）、时间排序、卡片点击新窗跳转原文
 - **响应式**：手机 / 平板 / 桌面自适应
-- **单文件部署**：所有代码（HTML + CSS + JS + 20 条数据）打包在一个 `index.html` 里
+- **静态部署**：页面代码在 `index.html`，热点数据由 `data.json` 自动更新
 
 ## 📂 文件结构
 
 ```
 .
-├── index.html      # 主页面（含样式、脚本、20 条热点数据）
+├── index.html      # 主页面（含样式、脚本和内嵌数据兜底）
 ├── data.json       # 原始数据备份（用于后续脚本处理）
 └── README.md       # 本文件
 ```
@@ -45,7 +45,7 @@ git push origin main
 ## 📊 数据更新流程
 
 1. 抓取当天（7-9 → 7-10 → ...）的科技热点
-2. 整理成 20 条 JSON 数据（category / title / summary / source / url / tags）
+2. 整理成 JSON 数据（category / title / summary / source / url / tags），不限制固定条数
 3. 把数据替换到 `data.json`，页面会自动读取最新数据
 4. 提交 + 推送 → Pages 自动更新
 
