@@ -169,6 +169,12 @@ function stripHtml(value = '') {
     .trim();
 }
 
+function limitText(value = '', maxLength = 120) {
+  const text = value.replace(/\s+/g, ' ').trim();
+  const chars = Array.from(text);
+  return chars.length > maxLength ? `${chars.slice(0, maxLength).join('')}...` : text;
+}
+
 function readTag(xml, tag) {
   const match = xml.match(new RegExp(`<${tag}(?:\\s[^>]*)?>([\\s\\S]*?)<\\/${tag}>`, 'i'));
   return match ? decodeXml(match[1]) : '';
@@ -238,10 +244,11 @@ function parseItems(xml, source) {
     const item = match[1];
     const title = stripHtml(readTag(item, 'title'));
     const rawSummary = readTag(item, 'description') || readTag(item, 'summary') || readTag(item, 'content');
-    const summaryText = stripHtml(rawSummary);
+    const fullSummaryText = stripHtml(rawSummary);
+    const summaryText = limitText(fullSummaryText);
     const link = readLink(item);
     const pubDate = readTag(item, 'pubDate') || readTag(item, 'published') || readTag(item, 'updated');
-    const category = classifyItem(title, summaryText);
+    const category = classifyItem(title, fullSummaryText);
 
     return {
       category,
@@ -250,7 +257,7 @@ function parseItems(xml, source) {
       source: source.name,
       publish_time: formatPublishTime(pubDate),
       url: link,
-      tags: makeTags(title, summaryText, category),
+      tags: makeTags(title, fullSummaryText, category),
     };
   }).filter((item) => item.title && item.url);
 }
