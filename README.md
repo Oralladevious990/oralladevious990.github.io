@@ -5,7 +5,7 @@
 ## 🌐 在线访问
 
 GitHub Pages 部署后访问：  
-`https://52lkj.github.io/tech-pulse/`
+`https://52lkj.github.io/`
 
 ## ✨ 页面特点
 
@@ -27,8 +27,8 @@ GitHub Pages 部署后访问：
 
 ```bash
 # 1. 克隆仓库
-git clone https://github.com/52lkj/tech-pulse.git
-cd tech-pulse
+git clone https://github.com/52lkj/52lkj.github.io.git
+cd 52lkj.github.io
 
 # 2. 直接用任意编辑器打开 index.html 修改
 # 推荐：VS Code / Cursor / WebStorm
@@ -46,7 +46,7 @@ git push origin main
 
 1. 抓取当天（7-9 → 7-10 → ...）的科技热点
 2. 整理成 20 条 JSON 数据（category / title / summary / source / url / tags）
-3. 把数据替换 `index.html` 中 `const DATA = {...}` 部分
+3. 把数据替换到 `data.json`，页面会自动读取最新数据
 4. 提交 + 推送 → Pages 自动更新
 
 ## 🗓 数据快照

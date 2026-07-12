@@ -312,11 +312,11 @@
 
 <footer class="footer">
   <p>🤖 <strong>科技脉搏 TechPulse</strong> · 自动拉取 + 人工精选 · 数据更新于 <span id="updateTime">2026-07-09</span></p>
-  <p style="margin-top:8px;">由 妙搭 & 飞书 AI 助手 出品 · <a href="https://github.com/52lkj/tech-pulse" target="_blank">GitHub 源码</a></p>
+  <p style="margin-top:8px;">由 妙搭 & 飞书 AI 助手 出品 · <a href="https://github.com/52lkj/52lkj.github.io" target="_blank">GitHub 源码</a></p>
 </footer>
 
 <script>
-const DATA = {
+let DATA = {
   "date": "2026-07-09",
   "weekday": "星期四",
   "summary": "2026-07-09 全球 AI 产业迎来'全双工'升级：OpenAI GPT-5.6 系列全球开放 + GPT-Live 语音模型发布，SpaceX AI 联合 Cursor 发布 Grok 4.5 (1.5 万亿参数 V9 模型)。同日 SK 海力士美国 IPO 获 7 倍超额认购、苹果博通 300 亿美元芯片采购、长鑫科技科创板启动发行。A 股半导体板块爆发：长鑫科技 IPO、国家超算互联网核心节点上线、浪潮信息半年净利预增 226%-288%。",
@@ -428,7 +428,18 @@ function updateCounts() {
   document.getElementById('statProduct').textContent = counts['新产品'];
 }
 
-function init() {
+async function loadData() {
+  try {
+    const response = await fetch(`data.json?ts=${Date.now()}`, { cache: 'no-store' });
+    if (!response.ok) throw new Error(`data.json ${response.status}`);
+    DATA = await response.json();
+  } catch (error) {
+    console.warn('Using inline fallback data:', error);
+  }
+}
+
+async function init() {
+  await loadData();
   document.getElementById('navDate').textContent = `${DATA.date} · ${DATA.weekday}`;
   document.getElementById('heroDate').textContent = `📅 ${DATA.date}（${DATA.weekday}）`;
   document.getElementById('heroSummary').textContent = DATA.summary;
